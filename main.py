@@ -76,7 +76,7 @@ def remover(tarefa_id: int):
         i += 1
 
 
-@app.get('/filmes')
+@app.get('/tarefas')
 def listar():
     # Listar todos os filmes
     filmes = []
