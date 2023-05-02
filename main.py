@@ -10,6 +10,8 @@ from dotenv import load_dotenv, find_dotenv
 import os
 from os.path import join, dirname
 
+from persistence.tarefas_mongo import TasksMongoDBRepository
+
 load_dotenv(find_dotenv())
 
 # use = os.getenv('USER')
@@ -44,6 +46,8 @@ client = pymongo.MongoClient(f"mongodb+srv://AppListFilme:NXxVLs4Xi6HsU8cv@clust
 db = client["listaFilmes"]
 collection = db["filme"]
 
+tarefas_repository = TasksMongoDBRepository()
+
 
 class Tarefas(BaseModel):
     id: Union[int, None]
@@ -59,30 +63,26 @@ tarefas: List[Tarefas] = []
 
 @app.post('/adicionar/')
 def adicionar(item: Tarefas):
-    item.id = len(tarefas) + 100
-    # tarefas.append(item)
-    col = dict(item)
-    collection.insert_one(col)
-    return item
+    # item.id = len(tarefas) + 100
+    # # tarefas.append(item)
+    # col = dict(item)
+    # collection.insert_one(col)
+    # return item
+    tarefas_repository.salvar(item)
 
 
 @app.delete('/deletar/{tarefa_id}')
 def remover(tarefa_id: int):
-    i = 0
-    for task in tarefas:
-        if task.id == tarefa_id:
-            tarefas.pop(i)
-            return tarefas
-        i += 1
+    tarefas_repository.remover(tarefa_id)
 
 
 @app.get('/tarefas')
-def listar():
-    # Listar todos os filmes
-    filmes = []
-    for filme in collection.find():
-        filmes.append(json_util.dumps(filme))
-    return filmes
+def todas_tarefas():
+    tarefas = tarefas_repository.todos()
+    # filmes_usuario = list(
+    #     filter(lambda filme: filme.usuario_id == usuario.id, filmes))
+    return tarefas
+
 
 
 @app.get('/tarefas/')
