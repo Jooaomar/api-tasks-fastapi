@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Response, status
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from typing import Union
+from typing import Union, List
 import pymongo
 from fastapi.responses import JSONResponse
 from bson import json_util
@@ -54,7 +54,7 @@ class Tarefas(BaseModel):
     prioridade: int     # 1,2,3
 
 
-tarefas: list[Tarefas] = []
+tarefas: List[Tarefas] = []
 
 
 @app.post('/adicionar/')
