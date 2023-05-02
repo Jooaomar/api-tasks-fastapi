@@ -18,6 +18,7 @@ load_dotenv(find_dotenv())
 USER = os.environ.get("USER_DB")
 PASSWORD = os.environ.get("PASSWORD_DB")
 CLUSTER = os.environ.get("CLUSTER_DB")
+# MOGO_URL = os.environ.get("MONGO_URL")
 
 app = FastAPI()
 
@@ -38,8 +39,8 @@ app.add_middleware(
 )
 
 
-# client = pymongo.MongoClient(f"mongodb+srv://AppListFilme:0223IFPIdbfilmes@cluster0.ms2ogne.mongodb.net/?retryWrites=true&w=majority")
-client = pymongo.MongoClient(f"mongodb+srv://{USER}:{PASSWORD}@{CLUSTER}")
+client = pymongo.MongoClient(f"mongodb+srv://AppListFilme:0223IFPIdbfilmes@cluster0.ms2ogne.mongodb.net/?retryWrites=true&w=majority")
+# client = pymongo.MongoClient(f"mongodb+srv://{USER}:{PASSWORD}@{CLUSTER}")
 
 db = client["listaFilmes"]
 collection = db["filme"]
