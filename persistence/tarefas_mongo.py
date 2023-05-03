@@ -55,7 +55,6 @@ class TasksMongoDBRepository():
         self.colecao.insert_one(col)
         return item
         
-
     def obter_um(self, filme_id):
         filtro = {"_id": ObjectId(filme_id)}
         filme_encontrado = self.colecao.find_one(filtro)
