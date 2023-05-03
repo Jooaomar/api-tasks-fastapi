@@ -12,16 +12,6 @@ from bson import json_util
 import json
 
 
-
-# class Tarefas(BaseModel):
-#     id: Union[int, None]
-#     responsavel: str
-#     descricao: str
-#     nivel: int          # 1,2,3,4,5
-#     situacao: str       # em amndamento, resolvida, pendente, cancelado
-#     prioridade: int  
-
-
 class TasksMongoDBRepository():
 
     tarefas: List[Tarefas] = []
