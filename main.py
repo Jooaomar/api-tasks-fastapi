@@ -24,10 +24,10 @@ CLUSTER = os.environ.get("CLUSTER_DB")
 app = FastAPI()
 
 origins = [
-    "http://localhost.tiangolo.com",
-    "http://0.0.0.0:3000/",
-    "http://localhost:3000/",
-    "http://localhost:3000"
+    "http://localhost:5173/",
+    "http://0.0.0.0:5173/",
+    "http://localhost:5173",
+    "http://0.0.0.0:5173",
 ]
 
 
@@ -53,9 +53,9 @@ class Tarefas(BaseModel):
     id: Union[int, None]
     responsavel: str
     descricao: str
-    nivel: int          # 1,2,3,4,5
+    nivel: str          # 1,2,3,4,5
     situacao: str       # em amndamento, resolvida, pendente, cancelado
-    prioridade: int     # 1,2,3
+    prioridade: str     # 1,2,3
 
 
 tarefas: List[Tarefas] = []
@@ -72,7 +72,7 @@ def adicionar(item: Tarefas):
 
 
 @app.delete('/deletar/{tarefa_id}')
-def remover(tarefa_id: int):
+def remover(tarefa_id: str):
     tarefas_repository.remover(tarefa_id)
 
 

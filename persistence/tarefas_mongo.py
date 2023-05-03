@@ -1,3 +1,4 @@
+import uuid
 from typing import TypedDict
 
 from bson.objectid import ObjectId
@@ -8,6 +9,7 @@ from typing import Union, List
 from presentation.viewmodels import Tarefas
 import pymongo
 from bson import json_util
+import json
 
 
 
@@ -48,7 +50,8 @@ class TasksMongoDBRepository():
     def todos(self):
         filmes = []
         for filme in self.colecao.find():
-            filmes.append(json_util.dumps(filme))
+            filme_json = json.loads(json_util.dumps(filme))
+            filmes.append(filme_json)
         return filmes
 
     def salvar(self, item: Tarefas):
@@ -56,11 +59,12 @@ class TasksMongoDBRepository():
         # filme.id = str(_id)
         # return filme
 
-        item.id = len(self.tarefas) + 100
+        item.id = str(uuid.uuid4())
         # tarefas.append(item)
         col = dict(item)
         self.colecao.insert_one(col)
         return item
+        
 
     def obter_um(self, filme_id):
         filtro = {"_id": ObjectId(filme_id)}
@@ -68,15 +72,8 @@ class TasksMongoDBRepository():
         return Tarefas.fromDict(filme_encontrado) if filme_encontrado else None
 
     def remover(self, filme_id):
-        # filtro = {"_id": ObjectId(filme_id)}
-        # self.colecao.delete_one(filtro)
-
-        i = 0
-        for task in self.tarefas:
-            if task.id == filme_id:
-                self.tarefas.pop(i)
-                return self.tarefas
-            i += 1
+        filtro = {"id": filme_id}
+        self.colecao.delete_one(filtro)
 
     def atualizar(self, filme_id, filme):
         filtro = {"_id": ObjectId(filme_id)}

@@ -10,7 +10,7 @@ from pydantic import BaseModel
 
 
 class Tarefas(BaseModel):
-    id: Union[int, None]
+    id: str
     responsavel: str
     descricao: str
     nivel: int          # 1,2,3,4,5
