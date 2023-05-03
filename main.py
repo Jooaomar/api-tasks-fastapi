@@ -28,6 +28,8 @@ origins = [
     "http://0.0.0.0:5173/",
     "http://localhost:5173",
     "http://0.0.0.0:5173",
+    "https://tasks-todo-egs9gz7xp-jooaomar.vercel.app/",
+    "https://tasks-todo-egs9gz7xp-jooaomar.vercel.app"
 ]
 
 
